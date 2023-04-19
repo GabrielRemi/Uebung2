@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+gcc -g -pedantic -Wall -o runge runge.c -lm
+
+for(( n=2; n<20;n++))
+do
+
+  ./runge $n
+
+done
+
+exit 0
