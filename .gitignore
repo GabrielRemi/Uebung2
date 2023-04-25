@@ -11,3 +11,6 @@ newton-interpolation.c
 stuetzpunkte.txt
 test.txt
 Data_interpolation.txt
+stuetzstellen.exe
+runge_backup.c
+runge.c

@@ -109,52 +109,49 @@ void printarr(double arr[], int N)
 //########################################################################
 //                      MAIN
 //########################################################################
-int main(int argc, char **args)
+int main(int argc, char **argv)
 {
     // Kontrolliere Argument Eingabe
+    // Eingabe: (1) stützstellen.txt (2) Ergebnis.txt (3) koeffizienten.txt 
     if ( argc < 2)
     {
         printf("Eingabe der Stützstellen fehlt");
         exit(1);
     }
 
-    int N = atoi(args[1]); //Anzahl der Stützstellen
+    //########################################
+    // Lese stützstellen aus Datei
+    FILE *fp = fopen(argv[1], "r");
 
-    // berechnne Stützstellen und Stützpunkte
-    double a = -5; double b = 5;
+    int N;
+    fscanf(fp, "%d", &N);
+    printf("%d", N);
+
     double *stuetz = malloc((N)*sizeof(double));  //Stellen
     double *y = malloc((N)*sizeof(double)); //Punkte
 
-    //####################################
-    //Rechnung für äquidistante Stützstellen
-    for(int i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
-        stuetz[i] = a + (b-a)/(N-1.0)*i;
-        y[i] = runge(stuetz[i]);
+        fscanf(fp, "%lf %lf", &stuetz[i], &y[i]);
     }
 
-    //#####################################
-    // Rechnung für Stützstellen aus Tschebyshow-Polynomen
-    // for(int i = -N/2; i <= N/2; i++)
-    // {
-    //     printf("%d\n", i);
-    //     double pi = 3.141592653;
-    //     stuetz[i] = cos(pi*(1+2*i)/(2*(N-1.0)));
-    // }
-    // printarr(stuetz, N);
+    fclose(fp);
+
+    //#######################################
+
 
     double *pcoeff = malloc(N*sizeof(double));
     pcoeff = interpolation(N, stuetz, y);
 
     // Polynome berechnen und in Datei abspeichern
-    FILE *fp = fopen("Data_interpolation.txt", "w");
+    fp = fopen("Data_interpolation.txt", "w");
     
     int num = 200;
     double x;
     double pol;
     for(int i = 0; i < num; i++)
     {
-        x = a + (b-a)/(num-1.0)*i;
+        x = stuetz[0] + (stuetz[N-1]-stuetz[0])/(num-1.0)*i;
         pol = horner(x, stuetz, pcoeff, N);
 
         fprintf(fp, "%.10f   %.10f\n", x, pol);
