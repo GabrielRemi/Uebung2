@@ -6,8 +6,6 @@ test.exe
 runge.exe
 newton-interpolation.exe
 uebung.pdf
-neville-aitken.c
-newton-interpolation.c
 stuetzpunkte.txt
 test.txt
 Data_interpolation.txt
@@ -19,4 +17,5 @@ neville-aitken.exe
 neville-ergebnis.txt
 neville.exe
 stuetzstellen.exe
+stuetzstellen.txt
 
